@@ -31,6 +31,7 @@ namespace EchoRelay.App.Forms.Dialogs
             if (Settings.FilesystemDatabaseDirectory != null)
                 txtDbFolder.Text = Settings.FilesystemDatabaseDirectory;
             chkStartServerOnStartup.Checked = Settings.StartServerOnStartup;
+            chkAllowUnverifiedServers.Checked = Settings.ServerDBAllowUnverifiedServers;
             chkPopulationOverPing.Checked = Settings.MatchingPopulationOverPing;
             chkForceIntoAnySession.Checked = Settings.MatchingForceIntoAnySessionOnFailure;
             chkValidateGameServers.Checked = Settings.ServerDBValidateGameServers ?? false;
@@ -108,6 +109,7 @@ namespace EchoRelay.App.Forms.Dialogs
             Settings.ServerDBApiKey = newServerDbApiKey;
             Settings.ServerDBValidateGameServers = chkValidateGameServers.Checked;
             Settings.ServerDBValidateGameServersTimeout = (int)numValidateGameServersTimeout.Value;
+            Settings.ServerDBAllowUnverifiedServers = chkAllowUnverifiedServers.Checked;
             Settings.MatchingPopulationOverPing = chkPopulationOverPing.Checked;
             Settings.MatchingForceIntoAnySessionOnFailure = chkForceIntoAnySession.Checked;
 

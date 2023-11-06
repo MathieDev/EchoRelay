@@ -5,6 +5,8 @@ using EchoRelay.Core.Server.Messages.Matching;
 using EchoRelay.Core.Server.Services.ServerDB;
 using EchoRelay.Core.Server.Storage.Types;
 using EchoRelay.Core.Utils;
+using System.Collections.Specialized;
+using System.Web;
 using static EchoRelay.Core.Server.Messages.ServerDB.ERGameServerStartSession;
 
 namespace EchoRelay.Core.Server.Services.Matching
@@ -162,6 +164,9 @@ namespace EchoRelay.Core.Server.Services.Matching
                 return;
             }
 
+            NameValueCollection queryStrings = HttpUtility.ParseQueryString(sender.RequestUri.Query);
+            bool includeUnverifiedServers = queryStrings.Get("unverifiedservers") == "true";
+
             // This is a create lobby, or find lobby request. We will try to find an existing server that matches the request.
             // Filter game servers, produce ping request endpoint data.
             // We limit the amount to 100, to avoid the response hitting the max packet size.
@@ -173,6 +178,7 @@ namespace EchoRelay.Core.Server.Services.Matching
                 channel: matchingSession.Channel,
                 locked: false,
                 lobbyTypes: matchingSession.SearchLobbyTypes,
+                includeUnverified: includeUnverifiedServers,
                 requestedTeam: matchingSession.TeamIndex,
                 unfilledServerOnly: true
             );
@@ -233,6 +239,9 @@ namespace EchoRelay.Core.Server.Services.Matching
             // Try to select a game server
             RegisteredGameServer? selectedGameServer = null;
 
+            NameValueCollection queryStrings = HttpUtility.ParseQueryString(sender.RequestUri.Query);
+            bool includeUnverifiedServers = queryStrings.Get("unverifiedservers") == "true";
+
             // If we have no results, there are likely no game servers available to serve the request.
             // See if the user specified that they wish to force users in this scenario to join any available server.
             if (request.Results.Length == 0)
@@ -240,7 +249,7 @@ namespace EchoRelay.Core.Server.Services.Matching
                 if (Server.Settings.ForceIntoAnySessionIfCreationFails)
                 {
                     // Resolve the most populated available game server with open space and select it.
-                    selectedGameServer = Server.ServerDBService.Registry.FilterGameServers(locked: false, requestedTeam: matchingSession.TeamIndex, unfilledServerOnly: true, lobbyTypes: new LobbyType[] {LobbyType.Unassigned, LobbyType.Public})
+                    selectedGameServer = Server.ServerDBService.Registry.FilterGameServers(locked: false, requestedTeam: matchingSession.TeamIndex, unfilledServerOnly: true, lobbyTypes: new LobbyType[] {LobbyType.Unassigned, LobbyType.Public}, includeUnverified: includeUnverifiedServers)
                         .MaxBy(x => (float)x.SessionPlayerCount / x.SessionPlayerLimits.TotalPlayerLimit);
                 } 
                 else
@@ -263,6 +272,7 @@ namespace EchoRelay.Core.Server.Services.Matching
                     channel: matchingSession.Channel,
                     locked: false,
                     lobbyTypes: matchingSession.SearchLobbyTypes,
+                    includeUnverified: includeUnverifiedServers,
                     requestedTeam: matchingSession.TeamIndex,
                     unfilledServerOnly: true
                 );

@@ -117,9 +117,12 @@ namespace EchoRelay.Core.Server.Services.ServerDB
             // Validate the API key if we enforce one.
             if (Server.Settings.ServerDBApiKey != null && apiKey != Server.Settings.ServerDBApiKey)
             {
+                if (apiKey != null || !Server.Settings.ServerDBAllowUnverifiedServers)
+                {
                 OnGameServerRegistrationFailure?.Invoke(sender, request, "Bad API key");
                 await sender.Send(new LobbyRegistrationFailure(LobbyRegistrationFailure.FailureCode.DatabaseError));
                 return;
+                }
             }
 
             // Create the game server object, then validate it.

@@ -60,6 +60,9 @@ namespace EchoRelay.App.Settings
         [JsonProperty("serverdb_api_key")]
         public string? ServerDBApiKey { get; set; }
 
+        [JsonProperty("serverdb_allow_unverified_servers")]
+        public bool ServerDBAllowUnverifiedServers { get; set; }
+
         /// <summary>
         /// If true, performs raw ping requests to game servers before accepting registration, to ensure their ports are properly exposed.
         /// </summary>
@@ -102,7 +105,7 @@ namespace EchoRelay.App.Settings
         {
 
         }
-        public AppSettings(string gameExecutableFilePath = "", ushort port = 0, string? filesystemDatabaseDirectory = null, string? mongoDbConnectionString = null, bool startServerOnStartup = true, string? serverDbApiKey = null, bool matchingPopulationOverPing = true, bool matchingForceIntoAny = true)
+        public AppSettings(string gameExecutableFilePath = "", ushort port = 0, string? filesystemDatabaseDirectory = null, string? mongoDbConnectionString = null, bool startServerOnStartup = true, string? serverDbApiKey = null, bool matchingPopulationOverPing = true, serverDbAllowUnverifiedServers = false, bool matchingForceIntoAny = true)
         {
             GameExecutableFilePath = gameExecutableFilePath;
             Port = port;
@@ -110,6 +113,7 @@ namespace EchoRelay.App.Settings
             MongoDBConnectionString = mongoDbConnectionString;
             StartServerOnStartup = startServerOnStartup;
             ServerDBApiKey = serverDbApiKey;
+            ServerDBAllowUnverifiedServers = serverDbAllowUnverifiedServers;
             MatchingPopulationOverPing = matchingPopulationOverPing;
             MatchingForceIntoAnySessionOnFailure = matchingForceIntoAny;
         }

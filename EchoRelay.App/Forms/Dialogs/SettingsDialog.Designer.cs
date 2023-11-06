@@ -265,6 +265,7 @@
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(numValidateGameServersTimeout);
             groupBox1.Controls.Add(chkValidateGameServers);
+            groupBox1.Controls.Add(chkAllowUnverifiedServers);
             groupBox1.Controls.Add(btnRegenerateAPIKey);
             groupBox1.Controls.Add(txtServerDBApiKey);
             groupBox1.Controls.Add(chkUseServerDBApiKeys);
@@ -332,6 +333,16 @@
             chkUseServerDBApiKeys.UseVisualStyleBackColor = true;
             chkUseServerDBApiKeys.CheckedChanged += chkUseServerDBApiKeys_CheckedChanged;
             // 
+            // chkAllowUnverifiedServers
+            // 
+            chkAllowUnverifiedServers.AutoSize = true;
+            chkAllowUnverifiedServers.Location = new Point(6, 47);
+            chkAllowUnverifiedServers.Name = "chkAllowUnverifiedServers";
+            chkAllowUnverifiedServers.Size = new Size(153, 19);
+            chkAllowUnverifiedServers.TabIndex = 11;
+            chkAllowUnverifiedServers.Text = "Allow Unverified Servers";
+            chkAllowUnverifiedServers.UseVisualStyleBackColor = true;
+            // 
             // SettingsDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -382,6 +393,7 @@
         private TextBox txtServerDBApiKey;
         private CheckBox chkUseServerDBApiKeys;
         private Button btnRegenerateAPIKey;
+        private CheckBox chkAllowUnverifiedServers;
         private CheckBox chkValidateGameServers;
         private NumericUpDown numValidateGameServersTimeout;
     }

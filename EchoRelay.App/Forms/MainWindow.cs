@@ -113,6 +113,7 @@ namespace EchoRelay
                 new ServerSettings(
                     port: Settings.Port,
                     serverDbApiKey: Settings.ServerDBApiKey,
+                    serverDbAllowUnverifiedServers: Settings.ServerDBAllowUnverifiedServers,
                     serverDBValidateServerEndpoint: Settings.ServerDBValidateGameServers ?? false,
                     serverDBValidateServerEndpointTimeout: Settings.ServerDBValidateGameServersTimeout ?? 3000,
                     favorPopulationOverPing: Settings.MatchingPopulationOverPing,
