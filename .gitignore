@@ -236,3 +236,6 @@ ipch/
 
 # Nuget package cache
 packages/
+/EchoRelay.App/Forms/Controls
+/EchoRelay.GameServer/EchoRelay.GameServer.vcxproj
+/EchoRelay.Patch/EchoRelay.Patch.vcxproj
